@@ -64,7 +64,7 @@ class Messages(models.Model):
 
 class Sellers(models.Model):
     id = models.AutoField(primary_key=True)
-    admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE,related_name="seller_admin_id") 
+    admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE,related_name="seller_admin_id", null=True, blank=True) 
     seller_name = models.CharField(max_length=100,blank=True)
     seller_phone = models.CharField(max_length=100,blank=True)
     cod_status = models.BooleanField(default=True)
@@ -93,7 +93,7 @@ class Contacts(models.Model):
 
 class Products(models.Model):
     id = models.AutoField(primary_key=True)
-    seller = models.ForeignKey(Sellers,on_delete=models.CASCADE, related_name="product_seller_id")
+    seller = models.ForeignKey(Sellers,on_delete=models.CASCADE, related_name="product_seller_id",null=True, blank=True)
     product_name = models.CharField(max_length=100,blank=True)
     price = models.IntegerField(blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
