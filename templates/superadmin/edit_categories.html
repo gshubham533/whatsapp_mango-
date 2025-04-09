@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                    {% include 'includes/messages.html'%}                 
+                <div class="col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Edit Categories</h4>
+                            <p class="card-title-desc">Create/Add New Category for your organization and you can later alocated it to any Trade Manager.
+                                {% comment %} <code>.{valid|invalid}-feedback</code> classes for
+                                <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a
+                                styled tooltip. {% endcomment %}
+                            </p>
+                            <form class="form-group" method = "POST" action = "{% url 'update_categories' %}" novalidate>
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip01" class="form-label">Category</label>
+                                            <input type="text" class="form-control" id="validationTooltip01"
+                                                placeholder="Add Category" name = "name" value="{{categories.name}}" required>
+                                            <input type="hidden" class="form-control" id="validationTooltip01"
+                                                placeholder="Add Category" name = "categories_id" value="{{categories.id}}">
+                                            {% comment %} <div class="valid-tooltip">
+                                                Looks good!
+                                            </div> {% endcomment %}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div>
+
+                                    <button class="btn btn-primary" type="submit">Update Category</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end card -->
+                </div> <!-- end col -->
+            </div> <!-- end col -->
+        </div> <!-- end col -->
+    </div> <!-- end col -->
+</div> <!-- end col -->
+
+{% endblock %}

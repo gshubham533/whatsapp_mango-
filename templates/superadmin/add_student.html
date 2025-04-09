@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %} 
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                    {% include 'includes/messages.html'%}                 
+                <div class="col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Create Trade Manager</h4>
+                            <p class="card-title-desc">Add new Trade Manager for your organisation and assign them role.
+                                {% comment %} <code>.{valid|invalid}-feedback</code> classes for
+                                <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a
+                                styled tooltip. {% endcomment %}
+                            </p>
+                            <form class="needs-validation" method = "post" action = "{% url 'addstudent'%}" novalidate>
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip01" class="form-label">First name</label>
+                                            <input type="text" class="form-control" id="validationTooltip01"
+                                                placeholder="First name" name = "first_name" value="Mark" required>
+                                            <div class="valid-tooltip">
+                                                Looks good!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip02" class="form-label">Last name</label>
+                                            <input type="text" class="form-control" id="validationTooltip02"
+                                                placeholder="Last name" name = "last_name"value="Otto" required>
+                                            <div class="valid-tooltip">
+                                                Looks good!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltipUsername" class="form-label">Username</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"
+                                                        id="validationTooltipUsernamePrepend">@</span>
+                                                </div>
+                                                <input type="text" class="form-control" name= "username" id="validationTooltipUsername"
+                                                    placeholder="Username"
+                                                    aria-describedby="validationTooltipUsernamePrepend" required>
+                                                <div class="invalid-tooltip">
+                                                    Please choose a unique and valid username.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {% comment %} <div class="col-md-6">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip03" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="validationTooltip03"
+                                                placeholder="City" required>
+                                            <div class="invalid-tooltip">
+                                                Please provide a valid city.
+                                            </div>
+                                        </div>
+                                    </div> {% endcomment %}
+                                    {% comment %} <div class="col-md-6">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip04" class="form-label">State</label>
+                                            <input type="text" class="form-control" id="validationTooltip04"
+                                                placeholder="State" required>
+                                            <div class="invalid-tooltip">
+                                                Please provide a valid state.
+                                            </div>
+                                        </div>
+                                    </div> {% endcomment %}
+                                </div>
+                                <div class="mb-3 position-relative">
+                                    <label for="validationTooltip01" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="validationTooltip01"
+                                        placeholder="First name" name= "email" value="Mark" required>
+                                    <div class="valid-tooltip">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="mb-3 position-relative">
+                                    <label for="validationTooltip01" class="form-label">Password</label>
+                                    <input type="text" class="form-control" id="validationTooltip01"
+                                        placeholder="First name" name = "password" value="Mark" required>
+                                    <div class="valid-tooltip">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingSelectGrid" name = "gender" aria-label="Floating label select example" required>
+                                            <option selected>Gender</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Other">Others</option>
+                                        </select>
+                                        <label for="floatingSelectGrid">Works with selects</label>
+                                        <div class="valid-tooltip">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingSelectGrid" name = "Categories_id" aria-label="Floating label select example" required>
+                                            <option selected>Categories</option>
+                                            {% for i in catgry %}
+                                            <option value="{{i.id}}">{{i.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="floatingSelectGrid">Works with selects</label>
+                                        <div class="valid-tooltip">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingSelectGrid" name = "City_id" aria-label="Floating label select example" required>
+                                            <option selected>City</option>
+                                            {% for i in cty %}
+                                            <option value="{{i.id}}">{{i.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="floatingSelectGrid">Works with selects</label>
+                                        <div class="valid-tooltip">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+
+                                    <button class="btn btn-primary" type="submit">Submit form</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end card -->
+                </div> <!-- end col -->
+            </div> <!-- end col -->
+        </div> <!-- end col -->
+    </div> <!-- end col -->
+</div> <!-- end col -->
+
+
+{% endblock %} 

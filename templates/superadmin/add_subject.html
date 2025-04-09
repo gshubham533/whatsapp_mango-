@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %} 
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                    {% include 'includes/messages.html'%}                 
+                <div class="col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Create Trade Manager</h4>
+                            <p class="card-title-desc">Add new Trade Manager for your organisation and assign them role.
+                                {% comment %} <code>.{valid|invalid}-feedback</code> classes for
+                                <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a
+                                styled tooltip. {% endcomment %}
+                            </p>
+                            <form class="needs-validation" method = "post" action = "" novalidate>
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip01" class="form-label">Subject Name</label>
+                                            <input type="text" class="form-control" id="validationTooltip01"
+                                                placeholder="First name" name = "subject_name" value="Mark" required>
+                                            <div class="valid-tooltip">
+                                                Looks good!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                            
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingSelectGrid" name = "categories_id" aria-label="Floating label select example" required>
+                                            <option selected>Categories</option>
+                                            {% for i in categories %}
+                                            <option value="{{i.id}}">{{i.name}}</option>
+                                           {% endfor %}
+                                        </select>
+                                        <label for="floatingSelectGrid">Works with selects</label>
+                                        <div class="valid-tooltip">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingSelectGrid" name = "staff_id" aria-label="Floating label select example" required>
+                                            <option selected>Staff</option>
+                                            {% for i in staff %}
+                                            <option value="{{i.id}}">{{i.admin.first_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="floatingSelectGrid">Works with selects</label>
+                                        <div class="valid-tooltip">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div>
+
+                                    <button class="btn btn-primary" type="submit">Submit form</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end card -->
+                </div> <!-- end col -->
+            </div> <!-- end col -->
+        </div> <!-- end col -->
+    </div> <!-- end col -->
+</div> <!-- end col -->
+
+
+{% endblock %} 

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %} 
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                    {% include 'includes/messages.html'%}                 
+                <div class="col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Add Products</h4>
+                            <p class="card-title-desc">Add new Trade Manager for your organisation and assign them role.
+                                {% comment %} <code>.{valid|invalid}-feedback</code> classes for
+                                <code>.{valid|invalid}-tooltip</code> classes to display validation feedback in a
+                                styled tooltip. {% endcomment %}
+                            </p>
+                            <form class="needs-validation" method = "post" action = "{% url 'addproducts'%}" novalidate>
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip01" class="form-label">Product Name</label>
+                                            <input type="text" class="form-control" id="validationTooltip01"
+                                                placeholder="First name" name = "Product1" value="Mark" >
+                                            <div class="valid-tooltip">
+                                                Looks good!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 position-relative">
+                                            <label for="validationTooltip02" class="form-label">Price</label>
+                                            <input type="text" class="form-control" id="validationTooltip02"
+                                                placeholder="Price" name = "Price1"value="Otto" >
+                                            <div class="valid-tooltip">
+                                                Looks good!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                               
+                            
+                                    
+        
+            
+                                <div>
+
+                                    <button class="btn btn-primary" type="submit">Submit form</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end card -->
+                </div> <!-- end col -->
+            </div> <!-- end col -->
+        </div> <!-- end col -->
+    </div> <!-- end col -->
+</div> <!-- end col -->
+
+
+{% endblock %} 

@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %} 
+
+{% block css %}
+    <!-- DataTables -->
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+        type="text/css" />
+    <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+        type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet"
+        type="text/css" />
+
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />     
+
+    <!-- Bootstrap Css -->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+
+
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="card-title">View/Update Products</h4>
+                            <p class="card-title-desc">You can Update or delete your products from here. You have limit of adding only 10 products.
+                            </p>
+
+                            {% comment %} <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>created at</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    {% for product in products %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{product.product_name}}</td>
+                                    <td>{{product.price}}</td>
+                                    <td>{{product.created_at}}</td>
+                                    <td><ul class="list-inline font-size-20 contact-links mb-0">
+                                        <li class="list-inline-item px-2">
+                                            <a href="#" title="Message"><i class="bx bx-edit-alt"></i></a>
+                                        </li>
+                                        <li class="list-inline-item px-2">
+                                            <a href="#" title="Profile"><i class='bx bx-folder-minus'></i></a>
+                                        </li>
+                                    </ul></td>
+                                    
+                                    
+                                </tr>
+                                {% endfor %}
+                                
+                                </tbody>
+                            </table> {% endcomment %}
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>created at</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <form method="post" id="edit_product_form_{{product.id}}" action="{% url 'edit_product_name' product.id %}">
+
+                                                {% csrf_token %}
+                                                <input type="text" name="product_name" value="{{product.product_name}}" required>
+                                                <button type="submit" form="edit_product_form_{{product.id}}">Save</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form method="post" id="edit_price_form_{{product.id}}" action="{% url 'edit_price' product.id %}">
+
+                                                {% csrf_token %}
+                                                <input type="number" name="price" value="{{product.price}}" required>
+                                                <button type="submit" form="edit_price_form_{{product.id}}">Save</button>
+                                            </form>
+                                        </td>
+                                        <td>{{product.created_at}}</td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+        </div>
+    </div>
+</div>
+        
+
+
+
+
+
+
+
+{% endblock content %}
+{% block script %}
+    <!-- Required datatable js -->
+    <!-- Required datatable js -->
+    <script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <!-- Buttons examples -->
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+    
+    <!-- Responsive examples -->
+    <script src="{% static 'assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+    <!-- Datatable init js -->
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>    
+
+{% endblock script %} 

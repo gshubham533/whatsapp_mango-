@@ -1,0 +1,401 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <!-- DataTables -->
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+        type="text/css" />
+    <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet"
+        type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet"
+        type="text/css" />
+
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="{% static 'assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}" rel="stylesheet" type="text/css" />     
+
+    <!-- Bootstrap Css -->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block content %}
+
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Dashboard</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+               
+                <div class="col-xl-8">
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">All Order</p>
+                                            <h4 class="mb-0">135</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
+                                                <span class="avatar-title">
+                                                    <i class="bx bx-copy-alt font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Product</p>
+                                            <h4 class="mb-0">9</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center ">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="bx bx-archive-in font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Crate </p>
+                                            <h4 class="mb-0">4</h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="bx bx-purchase-tag-alt font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="card mini-stats-wid">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <p class="text-muted fw-medium">Blank</p>
+                                            <h4 class="mb-0"></h4>
+                                        </div>
+
+                                        <div class="flex-shrink-0 align-self-center">
+                                            <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="bx bx-purchase-tag-alt font-size-24"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+
+                    
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="card-title">All Orders</h4>
+                            <p class="card-title-desc">You can check all your orders from here, and also dispatch orders of selected customer.
+                            </p>
+
+                            <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr.No</th>
+                                            <th>Name</th>
+                                            <th>Product Name</th>
+                                            <th>Address</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in orders %}
+                                        <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{i.name}}</td>
+                                            <td>{{i.product_id__product_name}}</td>
+                                            <td>{{i.address}}</td>
+                                            <td>{{i.quantity}}</td>
+                                            <td>{{i.comments}}</td>
+                                            <td> <button onclick="update_status({{ i.id }})" class="btn {%if i.dispatch == True %} btn-danger {%else%} btn-success {%endif%} change-{{ i.id }}" role="button" {%if i.dispatch == True %} disabled {%endif%}>{%if i.dispatch == True %} Dispatched {%else%} Dispatch {%endif%}</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+
+          
+            <!-- end row -->
+        </div>
+        <!-- container-fluid -->
+    </div>
+<!-- End Page-content -->
+
+<!-- Transaction Modal -->
+    <div class="modal fade transaction-detailModal" tabindex="-1" role="dialog" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transaction-detailModalLabel">Order Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Product id: <span class="text-primary">#SK2540</span></p>
+                    <p class="mb-4">Billing Name: <span class="text-primary">Neal Matthews</span></p>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle table-nowrap" id="datable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- end modal -->
+
+<!-- subscribeModal -->
+    <div class="modal fade" id="subscribeModal" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="avatar-md mx-auto mb-4">
+                            <div class="avatar-title bg-light rounded-circle text-primary h1">
+                                <i class="mdi mdi-email-open"></i>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-xl-10">
+                                <h4 class="text-primary">Subscribe !</h4>
+                                <p class="text-muted font-size-14 mb-4">Subscribe our newletter and get notification to stay update.</p>
+
+                                <div class="input-group bg-light rounded">
+                                    <input type="email" class="form-control bg-transparent border-0" placeholder="Enter Email address" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    
+                                    <button class="btn btn-primary" type="button" id="button-addon2">
+                                        <i class="bx bxs-paper-plane"></i>
+                                    </button>
+                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- end modal -->
+
+
+</div>
+<!-- Right Sidebar -->
+<div class="right-bar">
+<div data-simplebar class="h-100">
+    <div class="rightbar-title d-flex align-items-center px-3 py-4">
+
+        <h5 class="m-0 me-2">Settings</h5>
+
+        <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+            <i class="mdi mdi-close noti-icon"></i>
+        </a>
+    </div>
+<!-- Settings -->
+<hr class="mt-0" />
+<h6 class="text-center mb-0">Choose Layouts</h6>
+
+<div class="p-4">
+  <div class="mb-2">
+      <img src="{% static 'assets/images/layouts/layout-1.jpg' %}" class="img-thumbnail" alt="layout images">
+  </div>
+
+  <div class="form-check form-switch mb-3">
+      <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch" checked>
+      <label class="form-check-label" for="light-mode-switch">Light Mode</label>
+  </div>
+
+  <div class="mb-2">
+      <img src="{% static 'assets/images/layouts/layout-2.jpg' %}" class="img-thumbnail" alt="layout images">
+  </div>
+  <div class="form-check form-switch mb-3">
+      <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch">
+      <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
+  </div>
+
+  <div class="mb-2">
+      <img src="{% static 'assets/images/layouts/layout-3.jpg' %}" class="img-thumbnail" alt="layout images">
+  </div>
+  <div class="form-check form-switch mb-3">
+      <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch">
+      <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
+  </div>
+
+  <div class="mb-2">
+      <img src="{% static 'assets/images/layouts/layout-4.jpg' %}" class="img-thumbnail" alt="layout images">
+  </div>
+  <div class="form-check form-switch mb-5">
+      <input class="form-check-input theme-choice" type="checkbox" id="dark-rtl-mode-switch">
+      <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
+  </div>
+
+
+</div>
+
+</div> <!-- end slimscroll-menu-->
+</div>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>
+
+
+
+
+
+
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+
+
+{% endblock content %}
+
+{% block script %}
+    <!-- Required datatable js -->
+    <!-- Required datatable js -->
+    <script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <!-- Buttons examples -->
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-buttons/js/buttons.colVis.min.js' %}"></script>
+    
+    <!-- Responsive examples -->
+    <script src="{% static 'assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+
+    <!-- Datatable init js -->
+    <script src="{% static 'assets/js/pages/datatables.init.js' %}"></script>
+    <script>
+
+        // Set new default font family and font color to mimic Bootstrap's default styling
+    
+    
+        $(document).ready(function () {
+          $('#example').DataTable();
+      });
+    
+      function update_status(user_id) {
+        console.log("update_status(): user_id =", user_id);
+    
+        if (typeof user_id === "undefined") {
+            console.error("update_status(): user_id is undefined");
+            return;
+        }
+    
+        $.ajax({
+  url: '../change_status',
+  data: {
+    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
+    'user_id': user_id
+  },
+  dataType: 'json',
+  success: function (data) {
+    if (data.success) {
+      alert(data.response);
+        $(".change-"+user_id).removeClass("btn-success");
+        $(".change-"+user_id).addClass("btn-danger");
+        $(".change-"+user_id).text("Dispatched");
+
+      // here you update the HTML to change the active to innactive
+    }else{
+      alert("ajax call not success.");
+    }
+  }
+});
+      }
+    
+    
+    </script>
+{% endblock script %}
