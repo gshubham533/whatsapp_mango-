@@ -207,7 +207,7 @@ class chatbot:
         # elif text.lower() in seller3:
         #     self.cont_inst.cust_lead_id = 3
         #     self.send_message("greetings")
-        #     self.cont_inst.flow = "home/name"
+        #     self.cont_inst.flow = "home/name"                                         
         #     self.cont_inst.save()
         #     return None
         
