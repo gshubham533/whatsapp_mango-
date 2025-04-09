@@ -63,3 +63,9 @@ dist/
 *.swp
 *.bak
 *.tmp
+
+
+
+*.pyc
+env/
+staticfiles/
