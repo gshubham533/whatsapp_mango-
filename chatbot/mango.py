@@ -7,6 +7,8 @@ import re
 from datetime import datetime
 import datetime as dt
 
+from chatbot.cashfree import create_cashfree_payment_link
+
 from .models import Orders, Sellers,Products,Peti
 
 
@@ -40,23 +42,29 @@ class chatbot:
     
     def match(self):
         print("matchhhhhhhhhhhhhhhhhhh")
+        
+        # Check for peti flow
+        if self.cont_inst.flow in ["home/peti", "online", "payment_option"] and isinstance(self.cont_inst.quantity, int):
+            peti = Peti.objects.filter(id=self.cont_inst.ordered_product_id).first()
+            if peti:
+                print("Peti match:", peti.name, peti.price)
+                return str(peti.price)
+
+        # Default: Products flow (Dozen)
         mat = Products.objects.filter(id=self.cont_inst.ordered_product_id).first()
-        if mat is None:
-            pass
-        print("mattt",mat)
+        if not mat:
+            return "0"
+
         price = mat.price
         quantity = self.cont_inst.quantity
-        print(mat,price,quantity)
+        print(mat, price, quantity)
+
         try:
-            new_quant = str(quantity).replace("Dozen","")
-        except Exception as e:
-            new_quant = str(quantity)
-        # if not new_quant.isdigit():
-        #     raise ValueError("Invalid quantity: {}".format(quantity))
-        try:
+            new_quant = str(quantity).replace("Dozen", "").strip()
             total = str(price * int(new_quant))
         except Exception as e:
-            total =  new_quant
+            print("Calculation error:", e)
+            total = "0"
         return total
 
      
@@ -118,7 +126,7 @@ class chatbot:
         return None
 
 
-    def send_message(self, msg,total=""):
+    def send_message(self, msg,total="", payment_link=""):
         phone = self.msg_inst.wa_id
         text = self.msg_inst.msg
         name = self.cont_inst.wa_name
@@ -129,7 +137,7 @@ class chatbot:
         petis = self.get_peti()
         qr = seller_inst.qr_code
         phone_number = seller_inst.seller_phone
-        # total = self.match()
+        # total = self.match()  
     
 
 ####Payloads#### 
@@ -141,10 +149,11 @@ class chatbot:
            'peti' : {"messaging_product": "whatsapp","recipient_type": "individual","to": phone,"type": "interactive","interactive": {"type": "list","header": {"type": "text","text": "Hello "+name},"body": {"text": "Please select the quantity you would like to purchase from below.📦📦"},"action": {"button": "Send","sections": [{"title": "Select from options","rows": petis}]}}},
            'address' : {"messaging_product": "whatsapp","preview_url": False,"recipient_type": "individual","to": phone,"type": "text","text": {"body": "*Enter delivery location so that our mangoes could reach to you*.🥭\n\n*Please enter your Current Address* :📌:\n\n(𝘏𝘰𝘶𝘴𝘦 𝘯𝘰 ,𝘚𝘵𝘳𝘦𝘦𝘵, 𝘓𝘰𝘤𝘢𝘭𝘪𝘵𝘺, 𝘊𝘪𝘵𝘺, 𝘚𝘵𝘢𝘵𝘦)"}},
            'payment_option': {"messaging_product": "whatsapp","recipient_type": "individual","to": phone,"type": "interactive","interactive": {"type": "button","header": {"type": "text","text": "Payment"},"body": {"text": "Choose any one of the payment method 💳"},"action": {"buttons": [{"type": "reply","reply": {"id": "<Button 1>","title": "Pay Online"}},{"type": "reply","reply": {"id": "<Button 2>","title": "Cash on delivery"}}]}}},
-           'summery' : {"messaging_product": "whatsapp","preview_url": False,"recipient_type": "individual","to": phone,"type": "text","text": {"body": "This is your order summary😊\n\n*You will receive your mangoes in 2 to 3 days*.😋🥭\n*Name*:"+name+"\nTotal amount:"+total+"\n*address*:"+self.cont_inst.address+"\n*payment_method*:"+self.cont_inst.payment_option}},
+           'summery' : {"messaging_product": "whatsapp","preview_url": False,"recipient_type": "individual","to": phone,"type": "text","text": {"body": "This is your order summary😊\n\n*You will receive your mangoes in 2 to 3 days*.😋🥭\n*Name*:"+name+"\nTotal amount:"+total+"\n*address*:"+self.cont_inst.address+"\n*payment method*:"+self.cont_inst.payment_option}},
            'quantity' : {"messaging_product": "whatsapp","recipient_type": "individual","to": phone,"type": "interactive","interactive": {"type": "list","header": {"type": "text","text": "Hello "+name},"body": {"text": "Please select the quantity you would like to purchase from below.📦📦"},"action": {"button": "Send","sections": [{"title": "Select from options","rows": [{"id": "<ID 1.1>","title": "1 Dozen"},{"id": "<ID 1.2>","title": "2 Dozen"},{"id": "<ID 1.3>","title": "3 Dozen"},{"id": "<ID 1.4>","title": "4 Dozen"},{"id": "<ID 1.5>","title": "5 Dozen"},{"id": "<ID 1.6>","title": "6 Dozen"},{"id": "<ID 1.7>","title": "7 Dozen"},{"id": "<ID 1.8>","title": "8 Dozen"},{"id": "<ID 1.9>","title": "9 Dozen"},{"id": "<ID 1.10>","title": "10 Dozen"}]}]}}},
            'qr': {"messaging_product": "whatsapp","recipient_type": "individual","to": phone,"type": "image","image": {"id": qr}},
-           'contact' : {"messaging_product": "whatsapp","recipient_type": "individual","to": phone,"type": "interactive","interactive": {"type": "button","body": {"text": "Hello "+name+  "\n*To know more contact us on* "+phone_number+"\n"+seller_inst.seller_name},"action": {"buttons": [{"type": "reply","reply": {"id": "1","title": "Back"}}]}}}
+           'contact' : {"messaging_product": "whatsapp","recipient_type": "individual","to": phone,"type": "interactive","interactive": {"type": "button","body": {"text": "Hello "+name+  "\n*To know more contact us on* "+phone_number+"\n"+seller_inst.seller_name},"action": {"buttons": [{"type": "reply","reply": {"id": "1","title": "Back"}}]}}},
+           'payment' : {"messaging_product": "whatsapp","preview_url": False,"recipient_type": "individual","to": phone,"type": "text","text": {"body": "This is your order Payment link\n\n"+payment_link}},
 
 
 
@@ -170,7 +179,7 @@ class chatbot:
         print(self.cont_inst.flow)
 
         msg_inst = self.msg_inst
-        seller1 = ("krishnan",)
+        seller1 = ("shop",)
         seller2 = ("nikhil",)
         seller_inst = self.sellerinst()
         print(text,"textttttttt")
@@ -352,8 +361,18 @@ class chatbot:
                 self.cont_inst.flow = "online"
                 total = self.match()
                 self.create_order(self.cont_inst.ordered_product_id,self.cont_inst.quantity,self.cont_inst.address,self.cont_inst.payment_option,self.cont_inst.wa_name,self.msg_inst.wa_id,total)
-                self.send_message('summery',total)
-                self.send_message('qr')
+                payment_link = create_cashfree_payment_link(
+                    order_id=self.cont_inst.id,
+                    amount=total,
+                    name=self.cont_inst.wa_name,
+                    phone=self.msg_inst.wa_id
+                )
+                print("paymentlink",payment_link)
+                if payment_link:
+                    self.send_message("summery", total)
+                    self.send_message("payment",payment_link=payment_link)
+                else:
+                    self.send_message("text", "Sorry, payment link generation failed. Please try again.")
                 self.cont_inst.save()
                 return None
             if self.msg_inst.interactive_id == "<Button 2>":
