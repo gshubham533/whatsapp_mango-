@@ -3,6 +3,8 @@ import requests
 import os
 from datetime import datetime, timedelta, timezone
 
+from dashboard.creds import CASHFREE_CLIENT_ID, CASHFREE_CLIENT_SECRET
+
 def create_cashfree_payment_link(order_id, amount, name, phone, email="guest@example.com"):
     url = "https://sandbox.cashfree.com/pg/links"  # Use production URL for live
 
@@ -34,8 +36,8 @@ def create_cashfree_payment_link(order_id, amount, name, phone, email="guest@exa
 
     headers = {
         "x-api-version": "2022-09-01",
-        "x-client-id": 'TEST10561022ca7f6114400d5a18e29b22016501',
-        "x-client-secret": 'cfsk_ma_test_8915ba929bb54d9d495eede8a6202a7c_c2b5ea45',
+        "x-client-id": CASHFREE_CLIENT_ID,
+        "x-client-secret": CASHFREE_CLIENT_SECRET,
         "Content-Type": "application/json"
     }
 
